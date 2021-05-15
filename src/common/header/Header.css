@@ -1,0 +1,22 @@
+.header-grid-div {
+width: 100%;
+background-color: #263238;
+}
+.header-search_field-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.logo-icon-div {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    color: white;
+}
+.header-login-btn-div {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
