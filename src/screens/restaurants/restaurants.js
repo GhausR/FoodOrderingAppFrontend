@@ -26,7 +26,7 @@ render() {
                             >
                                 4.5(562)
       </Button>
-      <p className="price-for-two-text">rs 2000 for two</p>
+      <p className="price-for-two-text">₹ 2000 for two</p>
             </div>
             </div>
           </CardContent>
