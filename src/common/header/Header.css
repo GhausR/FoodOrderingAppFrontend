@@ -20,3 +20,28 @@ background-color: #263238;
     margin-top: 20px;
     margin-bottom: 20px;
 }
+.account-options-container{
+    position: relative;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    background-color: white;
+    border-style: solid;
+    border-color: grey;
+    border-width: 2px;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px 0;
+    padding: 10px;
+}
+.logged-in-user-first-name-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.header-outer-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}

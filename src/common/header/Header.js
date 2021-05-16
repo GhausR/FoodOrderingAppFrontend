@@ -10,13 +10,31 @@ import Button from '@material-ui/core/Button';
 
 class Header extends Component {
 
+    constructor() {
+        super();
+        // variable to check, if the options menu
+        // is open or not
+        this.state = {
+            "options-open": false,
+        }
+    }
+
     loginHandler = () => {
         this.props.modalHandler.openModalHandler();
     }
 
+    picClickHandler = () => {
+        if (this.state['options-open']) {
+            this.setState({ 'options-open': false });
+        }
+        else {
+            this.setState({ 'options-open': true });
+        }
+    }
+
     render() {
 
-        return <div>
+        return <div className="header-outer-div">
             <div className="header-grid-div">
                 <Grid container>
                     <Grid item xs={12} sm={12} md={4}>
@@ -30,7 +48,7 @@ class Header extends Component {
                         </div></div>
                     </Grid>
                     <Grid item xs={12} sm={12} md={1}>
-                        <div className="header-login-btn-div">
+                    {!(this.props.isLogin) && <div className="header-login-btn-div">
                             <Button
                                 variant="contained"
                                 color="default"
@@ -39,10 +57,26 @@ class Header extends Component {
                             >
                                 Login
       </Button>
-                        </div>
+                        </div>}
+                        {(this.props.isLogin) && <div onClick={this.picClickHandler} className="header-login-btn-div">
+                            <div className="logged-in-user-first-name-div">
+                            <AccountCircleIcon/>
+                            <p>FirstName</p>
+                            </div>
+                            
+                        </div>}
                     </Grid>
                 </Grid>
             </div>
+            {this.state['options-open'] && <div>
+                    <div className="account-options-container">
+                    <div>
+                            <p onClick={this.profilePageNavigationHandler} >My Profile</p>
+                        </div>
+                        <p onClick={this.logoutClickHandler}>Logout</p>
+                    </div>
+                </div>
+                }
         </div>
     }
 }
