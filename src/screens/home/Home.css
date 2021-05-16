@@ -1,1 +1,20 @@
-
+.form-control-container{
+    display: flex;
+    flex-direction: column;
+    justify-content:stretch;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+.form-control-registeration {
+    width: 90%;
+}
+.form-control-login {
+    width: 70%;
+}
+.dispBlock {
+    display: block;
+}
+.dispNone {
+    display: none;
+}

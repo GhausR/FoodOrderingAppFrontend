@@ -15,7 +15,7 @@ render() {
             <img className="restaurant-card-img-div" src="https://media-cdn.tripadvisor.com/media/photo-s/19/8b/4e/ab/new-place.jpg" alt="some restaurant pic"/>
             </div>
             <div>
-            <p>Lion Heart</p>
+            <p className="restaurant-name-heading">Lion Heart</p>
             <p>Categories 1, Categories 2, category 3,Categories 1, Categories 2, category 3</p>
             <div className="btn-stars-price-for-two-div">
             <Button
@@ -26,7 +26,7 @@ render() {
                             >
                                 4.5(562)
       </Button>
-      <p>rs 2000 for two</p>
+      <p className="price-for-two-text">rs 2000 for two</p>
             </div>
             </div>
           </CardContent>
