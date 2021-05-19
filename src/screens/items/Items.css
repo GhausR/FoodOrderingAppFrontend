@@ -1,0 +1,11 @@
+.items-adding-component {
+    display: flex;
+    flex-direction: row;
+    font-size: small;
+}
+p{
+    margin: 10px;
+}
+.item-name-para{
+    margin-right: 60px;
+}
