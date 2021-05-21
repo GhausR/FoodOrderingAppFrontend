@@ -6,6 +6,7 @@ import FastfoodIcon from '@material-ui/icons/Fastfood';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { green, red } from '@material-ui/core/colors';
 
 
 class Header extends Component {
@@ -32,6 +33,10 @@ class Header extends Component {
         }
     }
 
+    filterRestaurantHandler = (e) => {
+        this.props.modalHandler.filterRestaurant(e.target.value);
+    }
+
     render() {
 
         return <div className="header-outer-div">
@@ -43,8 +48,8 @@ class Header extends Component {
                     <Grid item xs={12} sm={12} md={7}>
                         <div><div className="header-search_field-container">
                             <SearchIcon />
-                            <TextField
-                                placeholder="Search by Restaurant name" />
+                            <TextField style={{width:210}}
+                                placeholder="Search by Restaurant name" onChange={this.filterRestaurantHandler}/>
                         </div></div>
                     </Grid>
                     <Grid item xs={12} sm={12} md={1}>
@@ -54,6 +59,7 @@ class Header extends Component {
                                 color="default"
                                 startIcon={<AccountCircleIcon />}
                                 onClick={this.loginHandler}
+                                style={{width:90, left:5}}
                             >
                                 Login
       </Button>
@@ -61,7 +67,7 @@ class Header extends Component {
                         {(this.props.isLogin) && <div onClick={this.picClickHandler} className="header-login-btn-div">
                             <div className="logged-in-user-first-name-div">
                             <AccountCircleIcon/>
-                            <p>FirstName</p>
+                            <p className="loggedInUserName-para">FirstNameLONGLONG</p>
                             </div>
                             
                         </div>}

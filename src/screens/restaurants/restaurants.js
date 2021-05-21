@@ -12,21 +12,21 @@ render() {
     <Card>
         <CardContent>
             <div>
-            <img className="restaurant-card-img-div" src="https://media-cdn.tripadvisor.com/media/photo-s/19/8b/4e/ab/new-place.jpg" alt="some restaurant pic"/>
+            <img className="restaurant-card-img-div" src={this.props.restraunt.photo_URL} alt={this.props.restraunt.restaurant_name}/>
             </div>
             <div>
-            <p className="restaurant-name-heading">Lion Heart</p>
-            <p>Categories 1, Categories 2, category 3,Categories 1, Categories 2, category 3</p>
+            <p className="restaurant-name-heading">{this.props.restraunt.restaurant_name}</p>
+            <p>{this.props.restraunt.categories}</p>
             <div className="btn-stars-price-for-two-div">
             <Button
                                 variant="contained"
                                 color="default"
                                 startIcon={<StarIcon />}
-                                style={{backgroundColor:"yellow"}}
+                                style={{backgroundColor:"yellow", height:30, width: 100}}
                             >
-                                4.5(562)
+                                {this.props.restraunt.customer_rating+"("+this.props.restraunt.number_customers_rated+")"}
       </Button>
-      <p className="price-for-two-text">₹ 2000 for two</p>
+      <p className="price-for-two-text">{"₹"+this.props.restraunt.average_price+"  for two"}</p>
             </div>
             </div>
           </CardContent>

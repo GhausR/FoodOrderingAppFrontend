@@ -48,7 +48,134 @@ class Home extends Component {
             requiredPswformHelperTextClassname: 'dispNone',
             invalidPswformHelperTextClassname: 'dispNone',
             invalidCredentialformHelperTextClassname: 'dispNone',
+            restaurantListToDisplay: [
+                {
+                    "id": "123",
+      "restaurant_name": "",
+      "photo_URL": "",
+      "customer_rating": 100,
+      "average_price": 1100,
+      "number_customers_rated": 28,
+      "address": {
+        "id": "",
+        "flat_building_name": "",
+        "locality": "",
+        "city": "",
+        "pincode": "",
+        "state": {
+          "id": "",
+          "state_name": ""
+        }
+      },
+      "categories": ""
+                },
+                {
+                    "id": "456",
+      "restaurant_name": "",
+      "photo_URL": "",
+      "customer_rating": 100,
+      "average_price": 1100,
+      "number_customers_rated": 28,
+      "address": {
+        "id": "",
+        "flat_building_name": "",
+        "locality": "",
+        "city": "",
+        "pincode": "",
+        "state": {
+          "id": "",
+          "state_name": ""
+        }
+      },
+      "categories": ""
+                }
+            ],
+            allRestaurantList: [
+                {
+                    "id": "123",
+      "restaurant_name": "",
+      "photo_URL": "",
+      "customer_rating": 100,
+      "average_price": 1100,
+      "number_customers_rated": 28,
+      "address": {
+        "id": "",
+        "flat_building_name": "",
+        "locality": "",
+        "city": "",
+        "pincode": "",
+        "state": {
+          "id": "",
+          "state_name": ""
+        }
+      },
+      "categories": ""
+                },
+                {
+                    "id": "456",
+      "restaurant_name": "",
+      "photo_URL": "",
+      "customer_rating": 100,
+      "average_price": 1100,
+      "number_customers_rated": 28,
+      "address": {
+        "id": "",
+        "flat_building_name": "",
+        "locality": "",
+        "city": "",
+        "pincode": "",
+        "state": {
+          "id": "",
+          "state_name": ""
+        }
+      },
+      "categories": ""
+                }
+            ]
         };
+    }
+
+
+    //API call before mounting the component on screen
+
+    componentWillMount() {
+        console.log("component will mount called");
+        let data = null;
+        let xhr = new XMLHttpRequest();
+        let that = this;
+        xhr.addEventListener("readystatechange", function () {
+            console.log("state changed : "+this.readyState);
+            if (this.readyState === 4) {
+                    that.setState({
+                        restaurantListToDisplay: JSON.parse(this.responseText).restaurants,
+                        allRestaurantList: JSON.parse(this.responseText).restaurants
+                    });
+            }
+        });
+
+        xhr.open("GET", "http://localhost:8080/api/restaurant");
+        // xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader("Accept", "application/json;charset=UTF-8");
+        /*
+        {
+  "Accept": "application/json;charset=UTF-8"
+}
+        */
+        xhr.send(data);
+    }
+
+
+    // to filter the restaurant based on the name
+    filterRestaurant(searchData) {
+        var tempArray = [];
+        this.state.allRestaurantList.forEach(element => {
+            if(element.restaurant_name.toLowerCase().includes(searchData.toLowerCase())){
+                tempArray.push(element);
+            }
+        });
+
+        this.setState({restaurantListToDisplay: tempArray});
+        
     }
 
     openModalHandler = () => {
@@ -112,14 +239,17 @@ class Home extends Component {
     }
 
     signupBtnClickHandler = () => {
+        var shouldSignUpUser = true;
         if (this.state.firstName === '') {
             this.setState({ firstNameRequiredformHelperTextClassname: 'dispBlock' });
+            shouldSignUpUser = false;
         } else {
             this.setState({ firstNameRequiredformHelperTextClassname: 'dispNone' });
         }
         if (this.state.email === '') {
             this.setState({ emailformRequiredHelperTextClassname: 'dispBlock' });
             this.setState({ emailformInvalidHelperTextClassname: 'dispNone' });
+            shouldSignUpUser = false;
         } else {
             this.setState({ emailformRequiredHelperTextClassname: 'dispNone' });
 
@@ -146,6 +276,7 @@ class Home extends Component {
                 this.setState({ emailformInvalidHelperTextClassname: 'dispNone' });
             }
             else {
+                shouldSignUpUser = false;
                 this.setState({ emailformInvalidHelperTextClassname: 'dispBlock' });
             }
 
@@ -153,6 +284,7 @@ class Home extends Component {
         if (this.state.psw === '') {
             this.setState({ pswformRequiredHelperTextClassname: 'dispBlock' });
             this.setState({ pswformInvalidHelperTextClassname: 'dispNone' });
+            shouldSignUpUser = false;
         } else {
             
         this.setState({ pswformRequiredHelperTextClassname: 'dispNone' });
@@ -168,7 +300,7 @@ class Home extends Component {
         else {
             // Regex to check valid password.
           //var regex = /^(?=.*[0-9])(?=.*[A-Z])?=.*[a-z])(?=.*[#@$%&*!^]).{8,}$/;
-          var regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[#@$%&*!^]).{6,20}$/;
+          var regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[#@$%&*!^]).{8,20}$/;
       
           ispswValid =  this.state.psw.match(regex);
         }
@@ -178,6 +310,7 @@ class Home extends Component {
 
         }
         else {
+            shouldSignUpUser = false;
             this.setState({ pswformInvalidHelperTextClassname: 'dispBlock' });
 
         }
@@ -186,6 +319,7 @@ class Home extends Component {
         if (this.state.contact === '') {
             this.setState({ contactformRequiredHelperTextClassname: 'dispBlock' });
             this.setState({ contactformInvalidHelperTextClassname: 'dispNone' });
+            shouldSignUpUser = false;
         } else {
             this.setState({ contactformRequiredHelperTextClassname: 'dispNone' });
 
@@ -194,7 +328,7 @@ class Home extends Component {
         if (this.state.contact.length !== 10) {
             isContactValid =  false;
           } else {
-            var notPureNumber = !(isNaN(this.state.contact));
+            var notPureNumber = (isNaN(this.state.contact));
             
             if (notPureNumber) {
                 isContactValid = false;
@@ -207,9 +341,43 @@ class Home extends Component {
             this.setState({ contactformInvalidHelperTextClassname: 'dispNone' });
         }
         else {
+            shouldSignUpUser = false;
             this.setState({ contactformInvalidHelperTextClassname: 'dispBlock' });
         }
     }
+
+    if (shouldSignUpUser) {
+        this.signUpUser();
+    }
+    else {
+
+    }
+    }
+
+
+    signUpUser = () => {
+        let that = this;
+        let dataSignUp = JSON.stringify({
+            "contact_number": this.state.contact,
+            "email_address": this.state.email,
+            "first_name": this.state.firstName,
+            "last_name": this.state.lastName,
+            "password": this.state.psw
+          });
+
+        let xhrSignup = new XMLHttpRequest();
+        xhrSignup.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                console.log("signup call state : " + this.readyState);
+                that.setState({ isModalOpen: true, value: 0});
+            }
+                
+        });
+
+        xhrSignup.open("POST", "http://localhost:8080/api/customer/signup");
+        xhrSignup.setRequestHeader("Accept", "application/json;charset=UTF-8");
+        xhrSignup.setRequestHeader("Cache-Control", "no-cache");
+        xhrSignup.send(dataSignUp);
     }
 
     contactInputFieldChangeHandler = (e) => {
@@ -245,6 +413,7 @@ class Home extends Component {
 
         const customStyles = {
             content: {
+                width: 500,
                 top: '50%',
                 left: '50%',
                 right: 'auto',
@@ -255,31 +424,19 @@ class Home extends Component {
         };
 
         return <div>
-            <Header isLogin={true} modalHandler={this}/>
-            <Grid container spacing={2}>
-                <Grid item xs={6} sm={6} md={3}>
-                    <RestaurantCard />
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <RestaurantCard />
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <RestaurantCard />
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <RestaurantCard />
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <RestaurantCard />
-                </Grid>
-                <Grid item xs={6} sm={6} md={3}>
-                    <RestaurantCard />
-                </Grid>
+            <Header isLogin={false} modalHandler={this}/>
+            <Grid container spacing={0}>
+                {this.state.restaurantListToDisplay.map(restrauntData => (
+                <Grid key={'grid'+restrauntData.id} item xs={6} sm={6} md={3}>
+                    <RestaurantCard restraunt={restrauntData}/>
+            </Grid>
+        ))}
+
             </Grid>
             <Modal id="login-register-modal" ariaHideApp={false} isOpen={this.state.isModalOpen} contentLabel="Login" onRequestClose={this.closeModalHandler} style={customStyles}>
                 <Tabs value={this.state.value} onChange={this.tabChangeHandler}>
-                    <Tab label="Login" />
-                    <Tab label="Register" />
+                    <Tab label="LOGIN" />
+                    <Tab label="SIGNUP" />
                 </Tabs>
                 <TabContainer>
                     {this.state.value === 0 && <div>
@@ -314,7 +471,7 @@ class Home extends Component {
                             </FormControl>
                         </div>
                         <div className="form-control-container">
-                            <FormControl className="form-control-registeration" required>
+                            <FormControl className="form-control-registeration">
                                 <InputLabel htmlFor="lastName">Last Name</InputLabel>
                                 <Input id="lastName" type="text" onChange={this.signupInputFieldChangeHandler} />
                             </FormControl>
@@ -337,7 +494,7 @@ class Home extends Component {
                         </div>
                         <div className="form-control-container">
                             <FormControl className="form-control-registeration" required>
-                                <InputLabel htmlFor="contact">Contact</InputLabel>
+                                <InputLabel htmlFor="contact">Contact No.</InputLabel>
                                 <Input id="contact" type="text" onChange={this.signupInputFieldChangeHandler} />
                                 <FormHelperText className={this.state.contactformRequiredHelperTextClassname} style={{ color: '#f05945' }}>required</FormHelperText>
                                 <FormHelperText className={this.state.contactformInvalidHelperTextClassname} style={{ color: '#f05945' }}>Contact No. must contain only numbers and must be 10 digits long</FormHelperText>

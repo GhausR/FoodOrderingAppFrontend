@@ -7,18 +7,17 @@ background-color: #263238;
     flex-direction: row;
     align-items: center;
     color: white;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .logo-icon-div {
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 20px;
-    margin-bottom: 20px;
     color: white;
 }
 .header-login-btn-div {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .account-options-container{
     position: relative;
@@ -44,4 +43,7 @@ background-color: #263238;
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
+}
+.loggedInUserName-para{
+    margin-left: 0px;
 }
