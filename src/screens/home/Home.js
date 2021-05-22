@@ -550,6 +550,11 @@ class Home extends Component {
     }
 
 
+    openRestaurantDetailsHandler = (restaurantId) => {
+        this.props.history.push('/restaurant/'+restaurantId);
+    }
+
+
     render() {
 
         const customStyles = {
@@ -571,7 +576,10 @@ class Home extends Component {
             <Grid container spacing={0}>
                 {this.state.restaurantListToDisplay.map(restrauntData => (
                 <Grid key={'grid'+restrauntData.id} item xs={6} sm={6} md={3}>
+                    <div onClick={this.openRestaurantDetailsHandler.bind(this, restrauntData.id)}>
                     <RestaurantCard restraunt={restrauntData}/>
+                    </div>
+                    
             </Grid>
         ))}
 

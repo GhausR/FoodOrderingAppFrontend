@@ -13,7 +13,7 @@ return <div className="restaurant-info-section">
             <Grid container>
                 <Grid item xs={4} sm={4} md={0}></Grid>
                 <Grid item xs={4} sm={4} md={12}>
-                    <img className="restaurant-info-image" src="https://media-cdn.tripadvisor.com/media/photo-s/19/8b/4e/ab/new-place.jpg" alt="restaurant-image" />
+                    <img className="restaurant-info-image" src={props.restaurant.photo_URL} alt={props.restaurant.restaurant_name} />
                 </Grid>
                 <Grid item xs={4} sm={4} md={0}></Grid>
             </Grid>
@@ -26,7 +26,7 @@ return <div className="restaurant-info-section">
                     <Grid item xs={4} sm={4} md={0}></Grid>
                     <Grid item xs={4} sm={4} md={12}>
                         <p>
-                            Restaurant Name
+                            {props.restaurant.restaurant_name}
                 </p>
                     </Grid>
                     <Grid item xs={4} sm={4} md={0}></Grid>
@@ -38,7 +38,7 @@ return <div className="restaurant-info-section">
                 <Grid container>
                     <Grid item xs={4} sm={4} md={0}></Grid>
                     <Grid item xs={4} sm={4} md={12}>
-                        <p> Restaurant city</p>
+                        <p>{props.restaurant.address.city}</p>
                     </Grid>
                     <Grid item xs={4} sm={4} md={0}></Grid>
                 </Grid>
@@ -49,7 +49,7 @@ return <div className="restaurant-info-section">
                 <Grid container>
                     <Grid item xs={4} sm={4} md={0}></Grid>
                     <Grid item xs={4} sm={4} md={12}>
-                        <p>Restaurant Categories, Restaurant Categories, Restaurant Categories, Restaurant Categories</p>
+                        <p>{props.categoryList}</p>
                     </Grid>
                     <Grid item xs={4} sm={4} md={0}></Grid>
                 </Grid>
@@ -64,12 +64,12 @@ return <div className="restaurant-info-section">
                         <div>
                             <Grid container>
                                 <Grid item xs={3} sm={3} md={0}>
-
                                 </Grid>
                                 <Grid item xs={3} sm={3} md={12}>
                                     <StarIcon />
+                                    <p>{props.restaurant.customer_rating}</p>
                                     <p>AVERAGE RATING BY</p>
-                                    <p>658 CUSTOMERS</p>
+                                    <p>{props.restaurant.number_customers_rated+" CUSTOMERS"}</p>
                                 </Grid>
                                 <Grid item xs={3} sm={3} md={0}>
 
@@ -86,7 +86,7 @@ return <div className="restaurant-info-section">
 
                                 </Grid>
                                 <Grid item xs={3} sm={3} md={12}>
-                                    <p>₹ 600</p>
+                                    <p>{"₹ "+props.restaurant.average_price}</p>
                                     <p>AVERAGE COST FOR</p>
                                     <p>TWO PEOPLE</p>
                                 </Grid>

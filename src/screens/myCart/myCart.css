@@ -5,11 +5,13 @@
 .myCart-header{
     display: flex;
     flex-direction: row;
+    align-items: center;
     margin: 20px;
 }
 .myCart-totalPrice{
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 Button {
     width: 70%;
