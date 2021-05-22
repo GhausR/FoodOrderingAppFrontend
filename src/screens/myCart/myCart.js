@@ -31,12 +31,16 @@ class MyCartCard extends Component {
                         this.props.addRemoveItemHandler.addItemToCart(itemId);
                     }
 
+                    checkoutClickHandler = () => {
+                        this.props.addRemoveItemHandler.checkout();
+                    }
+
     render() {
         return <div className="myCartCard-div">
             <Card>
                 <div className="myCart-header">
 
-                    <Badge badgeContent={4} color="primary">
+                    <Badge badgeContent={this.props.badgeCount} color="primary">
                         <ShoppingCartIcon />
                     </Badge>
                     <p>My Cart</p>
@@ -57,7 +61,10 @@ class MyCartCard extends Component {
                         </div>
                         <p>{"₹ " + this.props.totalBill}</p>
                     </div>
-                    <Button variant="contained" color="primary">
+                    <Button 
+                    variant="contained" 
+                    color="primary"
+                    onClick={this.checkoutClickHandler}>
                         Checkout
 </Button>
                 </div>
