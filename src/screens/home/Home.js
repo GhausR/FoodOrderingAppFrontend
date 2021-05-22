@@ -29,6 +29,7 @@ class Home extends Component {
             loggedIn: false,
             isModalOpen: false,
             loggedInSuccessfullyMessageClass: '',
+            registeredSuccessfullyMessageClass: '',
             value: 0,
             firstName: '',
             lastName: '',
@@ -444,7 +445,12 @@ class Home extends Component {
             if (this.readyState === 4) {
                 if(this.status == 201) {
                    console.log("signup call state : " + this.readyState);
-                   that.setState({ isModalOpen: true, value: 0});
+                   //registeredSuccessfullyMessageClass
+                   that.setState({ isModalOpen: true, value: 0, registeredSuccessfullyMessageClass: 'show'});
+                   // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){
+    that.setState({registeredSuccessfullyMessageClass: ''});
+  }, 3000);
                 }
                 else {
                     //this.state.contactformAlreadyExistsHelperTextClassname
@@ -471,6 +477,56 @@ class Home extends Component {
     passwordInputFieldChangeHandler = (e) => {
         this.setState({ loginPsw: e.target.value });
     }
+
+    logout = () => {
+
+
+
+
+
+
+    let that = this;
+        let dataSignUp = null;
+
+        let xhrSignup = new XMLHttpRequest();
+        xhrSignup.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                if(this.status == 200) {
+                    // console.log(sessionStorage.getItem('access-token'));
+    sessionStorage.removeItem('uuid');
+    sessionStorage.removeItem('access-token');
+    sessionStorage.removeItem('firstname');
+    that.setState({ loggedIn: false , loggedInUserFirstName: ''});
+                }
+                else {
+
+                }
+                
+            }
+                
+        });
+
+        xhrSignup.open("POST", "http://localhost:8080/api/customer/logout");
+        xhrSignup.setRequestHeader("Accept", "application/json;charset=UTF-8");
+        xhrSignup.setRequestHeader("Content-Type", "application/json");
+        xhrSignup.setRequestHeader("Cache-Control", "no-cache");
+        xhrSignup.setRequestHeader("authorization", "Bearer "+sessionStorage.getItem("access-token"));
+        // console.log(sessionStorage.getItem("access-token"));
+        xhrSignup.send(dataSignUp);
+
+
+
+
+
+
+
+
+    }
+
+    goToProfile = () => {
+        console.log("home method called");
+        this.props.history.push('/profile'); 
+    }  
 
 
     signupInputFieldChangeHandler = (e) => {
@@ -510,6 +566,7 @@ class Home extends Component {
 
         return <div>
 <div className={this.state.loggedInSuccessfullyMessageClass} id="snackbar">Logged in successfully!</div>
+<div className={this.state.registeredSuccessfullyMessageClass} id="snackbar">Registered successfully! Please login now!</div>
             <Header isLogin={this.state.loggedIn} modalHandler={this} firstName={this.state.loggedInUserFirstName} />
             <Grid container spacing={0}>
                 {this.state.restaurantListToDisplay.map(restrauntData => (

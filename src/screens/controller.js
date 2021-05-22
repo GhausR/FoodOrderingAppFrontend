@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './home/Home';
 import Details from './details/Details';
 import Checkout from './checkout/Checkout';
+import Profile from './profile/Profile';
 
 // to handle navigation/ routing
 class Controller extends Component {
@@ -10,9 +11,10 @@ class Controller extends Component {
       return (
         <Router>
           <div>
-            <Route path='/home' render={(props) => <Home {...props} />} />
+          <Route exact path='/' render={(props) => <Home {...props} />} />
             <Route path='/restaurant/:restaurant_id' render={(props) => <Details {...props} />} />
             <Route path='/checkout' render={(props) => <Checkout {...props} />} />
+            <Route path='/profile' render={(props) => <Profile {...props} />} />
           </div>
         </Router>
       )

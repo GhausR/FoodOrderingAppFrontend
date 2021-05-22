@@ -37,6 +37,22 @@ class Header extends Component {
         this.props.modalHandler.filterRestaurant(e.target.value);
     }
 
+    logoutClickHandler = () => {
+        this.props.modalHandler.logout();
+        this.setState({ 'options-open': false });
+    }
+
+    profilePageNavigationHandler = () => {
+        this.props.modalHandler.goToProfile();
+    }
+    /*console.log(sessionStorage.getItem('access-token'));
+    sessionStorage.removeItem('uuid');
+    sessionStorage.removeItem('access-token');
+    this.setState({ loggedIn: false })
+
+    this.props.history.push('/');
+    */
+
     render() {
 
         return <div className="header-outer-div">
