@@ -67,7 +67,7 @@ class Header extends Component {
                         {(this.props.isLogin) && <div onClick={this.picClickHandler} className="header-login-btn-div">
                             <div className="logged-in-user-first-name-div">
                             <AccountCircleIcon/>
-                            <p className="loggedInUserName-para">FirstNameLONGLONG</p>
+                            <p className="loggedInUserName-para">{this.props.firstName}</p>
                             </div>
                             
                         </div>}

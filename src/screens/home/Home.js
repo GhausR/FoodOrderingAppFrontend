@@ -26,7 +26,9 @@ class Home extends Component {
     constructor() {
         super();
         this.state = {
+            loggedIn: false,
             isModalOpen: false,
+            loggedInSuccessfullyMessageClass: '',
             value: 0,
             firstName: '',
             lastName: '',
@@ -35,6 +37,7 @@ class Home extends Component {
             contact: '',
             loginContact: '',
             loginPsw: '',
+            loggedInUserFirstName: '',
             firstNameRequiredformHelperTextClassname: 'dispNone',
             emailformRequiredHelperTextClassname: 'dispNone',
             pswformRequiredHelperTextClassname: 'dispNone',
@@ -190,14 +193,16 @@ class Home extends Component {
     }
 
     loginBtnClickHandler = () => {
+        var shouldLoginUser = true;
         if(this.state.loginContact === '') {
             this.setState({requiredContactformHelperTextClassname : 'dispBlock'});
             this.setState({ invalidContactformHelperTextClassname: 'dispNone' });
-            this.setState({invalidPswformHelperTextClassname: 'dispNone' });
-            this.setState({invalidCredentialformHelperTextClassname: 'dispNone'});
+            // this.setState({invalidPswformHelperTextClassname: 'dispNone' });
+            // this.setState({invalidCredentialformHelperTextClassname: 'dispNone'});
+            shouldLoginUser = false;
         }
         else {
-            this.setState({requiredContactformHelperTextClassname : 'dispBlock'});
+            this.setState({requiredContactformHelperTextClassname : 'dispNone'});
 
 
 
@@ -206,37 +211,106 @@ class Home extends Component {
         if (this.state.loginContact.length !== 10) {
             isContactValid =  false;
           } else {
-            var notPureNumber = !(isNaN(this.state.loginContact));
+            var notPureNumber = (isNaN(this.state.loginContact));
             
             if (notPureNumber) {
                 isContactValid = false;
             } else {
                 isContactValid = true;
             }
-          }
+        }
 
         if (isContactValid) {
             this.setState({ invalidContactformHelperTextClassname: 'dispNone' });
         }
         else {
             this.setState({ invalidContactformHelperTextClassname: 'dispBlock' });
+            shouldLoginUser = false;
         }
+
+          }
+
+        
 
 
 
         if(this.state.loginPsw === '') {
             this.setState({requiredPswformHelperTextClassname : 'dispBlock'});
-            this.setState({invalidPswformHelperTextClassname: 'dispNone' });
-            this.setState({invalidCredentialformHelperTextClassname: 'dispNone'});
+            // this.setState({invalidPswformHelperTextClassname: 'dispNone' });
+            // this.setState({invalidCredentialformHelperTextClassname: 'dispNone'});
+            shouldLoginUser = false;
         }
         else {
             //requiredPswformHelperTextClassname
-            this.setState({requiredPswformHelperTextClassname: 'dispBlock'});
+            this.setState({requiredPswformHelperTextClassname: 'dispNone'});
 
         }
 
+
+        if (shouldLoginUser) {
+            this.loginUser();
         }
+        else {
+
+        }
+
+        // }
     }
+
+
+
+    loginUser = () => {
+        let that = this;
+        let dataLogin = null
+
+        let xhrLogin = new XMLHttpRequest();
+        xhrLogin.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                if(xhrLogin.getResponseHeader('access-token') === undefined || xhrLogin.getResponseHeader('access-token') === null){
+                    if(JSON.parse(this.responseText).code === "ATH-001"){
+                        //This contact number has not been registered!
+                        //invalidCredentialformHelperTextClassname
+                        that.setState({invalidCredentialformHelperTextClassname: 'dispNone'});
+                        that.setState({invalidPswformHelperTextClassname: 'dispBlock'});
+                    }
+                    else {
+                        //Invalid Credentials
+                        //invalidPswformHelperTextClassname
+                        that.setState({invalidCredentialformHelperTextClassname: 'dispBlock'});
+                        that.setState({invalidPswformHelperTextClassname: 'dispNone'});
+                        
+                    }
+                }
+                else {
+                    that.setState({invalidCredentialformHelperTextClassname: 'dispNone'});
+                    //invalidPswformHelperTextClassname
+                    that.setState({invalidPswformHelperTextClassname: 'dispNone'});
+                    console.log(xhrLogin.getResponseHeader('access-token'));
+
+                sessionStorage.setItem('uuid', JSON.parse(this.responseText).id);
+                sessionStorage.setItem('firstname', JSON.parse(this.responseText).first_name);
+                sessionStorage.setItem('access-token', xhrLogin.getResponseHeader('access-token'));
+
+                that.setState({ loggedIn: true , loggedInUserFirstName: JSON.parse(this.responseText).first_name, loggedInSuccessfullyMessageClass: 'show'});
+                // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){
+    that.setState({loggedInSuccessfullyMessageClass: ''});
+  }, 3000);
+                that.closeModalHandler();
+                }
+                
+            }
+        })
+
+
+        xhrLogin.open("POST", "http://localhost:8080/api/customer/login");
+        xhrLogin.setRequestHeader("Authorization", "Basic " + window.btoa(this.state.loginContact + ":" + this.state.loginPsw));
+        xhrLogin.setRequestHeader("Content-Type", "application/json");
+        xhrLogin.setRequestHeader("Cache-Control", "no-cache");
+        xhrLogin.send(dataLogin);
+    }
+
+
 
     signupBtnClickHandler = () => {
         var shouldSignUpUser = true;
@@ -368,14 +442,25 @@ class Home extends Component {
         let xhrSignup = new XMLHttpRequest();
         xhrSignup.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
-                console.log("signup call state : " + this.readyState);
-                that.setState({ isModalOpen: true, value: 0});
+                if(this.status == 201) {
+                   console.log("signup call state : " + this.readyState);
+                   that.setState({ isModalOpen: true, value: 0});
+                }
+                else {
+                    //this.state.contactformAlreadyExistsHelperTextClassname
+                    that.setState({ contactformRequiredHelperTextClassname: 'dispNone' });
+                    that.setState({ contactformInvalidHelperTextClassname: 'dispNone' });
+                    that.setState({ contactformAlreadyExistsHelperTextClassname: 'dispBlock' });
+
+                }
+                
             }
                 
         });
 
         xhrSignup.open("POST", "http://localhost:8080/api/customer/signup");
         xhrSignup.setRequestHeader("Accept", "application/json;charset=UTF-8");
+        xhrSignup.setRequestHeader("Content-Type", "application/json");
         xhrSignup.setRequestHeader("Cache-Control", "no-cache");
         xhrSignup.send(dataSignUp);
     }
@@ -424,7 +509,8 @@ class Home extends Component {
         };
 
         return <div>
-            <Header isLogin={false} modalHandler={this}/>
+<div className={this.state.loggedInSuccessfullyMessageClass} id="snackbar">Logged in successfully!</div>
+            <Header isLogin={this.state.loggedIn} modalHandler={this} firstName={this.state.loggedInUserFirstName} />
             <Grid container spacing={0}>
                 {this.state.restaurantListToDisplay.map(restrauntData => (
                 <Grid key={'grid'+restrauntData.id} item xs={6} sm={6} md={3}>
