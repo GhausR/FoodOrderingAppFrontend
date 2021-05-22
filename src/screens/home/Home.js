@@ -572,7 +572,7 @@ class Home extends Component {
         return <div>
 <div className={this.state.loggedInSuccessfullyMessageClass} id="snackbar">Logged in successfully!</div>
 <div className={this.state.registeredSuccessfullyMessageClass} id="snackbar">Registered successfully! Please login now!</div>
-            <Header isLogin={this.state.loggedIn} modalHandler={this} firstName={this.state.loggedInUserFirstName} />
+            <Header isLogin={this.state.loggedIn} modalHandler={this} firstName={this.state.loggedInUserFirstName} isOnHome={true}/>
             <Grid container spacing={0}>
                 {this.state.restaurantListToDisplay.map(restrauntData => (
                 <Grid key={'grid'+restrauntData.id} item xs={6} sm={6} md={3}>

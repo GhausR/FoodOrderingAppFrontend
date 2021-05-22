@@ -1,6 +1,7 @@
 .myCartCard-div{
     width: 400px;
     margin-left: 20px;
+    margin-right: 20px;
 }
 .myCart-header{
     display: flex;
@@ -8,11 +9,22 @@
     align-items: center;
     margin: 20px;
 }
+.myCart-body{
+    margin: 20px; 
+}
 .myCart-totalPrice{
     display: flex;
     flex-direction: row;
     align-items: center;
+    font-weight: bolder;
 }
 Button {
-    width: 70%;
+    width: 90%;
+}
+.myCart-footer{
+    margin-left: 30px;
+    margin-bottom: 25px;
+}
+.space-between-total-price {
+    width: 140px;
 }

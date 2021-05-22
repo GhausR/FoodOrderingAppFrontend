@@ -62,11 +62,11 @@ class Header extends Component {
                         <div className="logo-icon-div"><FastfoodIcon /></div>
                     </Grid>
                     <Grid item xs={12} sm={12} md={7}>
-                        <div><div className="header-search_field-container">
+                    {(this.props.isOnHome) &&<div><div className="header-search_field-container">
                             <SearchIcon />
                             <TextField style={{width:210}}
                                 placeholder="Search by Restaurant name" onChange={this.filterRestaurantHandler}/>
-                        </div></div>
+                        </div></div>}
                     </Grid>
                     <Grid item xs={12} sm={12} md={1}>
                     {!(this.props.isLogin) && <div className="header-login-btn-div">

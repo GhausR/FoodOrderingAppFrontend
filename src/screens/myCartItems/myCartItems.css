@@ -3,3 +3,12 @@
     flex-direction: row;
     align-items: center;
 }
+.veg-non-veg-cart-icon-div{
+   margin-top: 10px; 
+}
+.remove-item-icon{
+    margin-right: 5px;
+}
+.add-item-icon{
+    margin-left: 5px;
+}
