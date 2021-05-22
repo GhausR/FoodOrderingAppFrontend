@@ -1,19 +1,20 @@
 .restaurant-card-div {
-    padding: 5px;
+  padding: 5px;
+  cursor: pointer;
 }
-.restaurant-card-img-div{
-    width: 300px;
-    height: 150px;
+.restaurant-card-img-div {
+  width: 300px;
+  height: 150px;
 }
 .btn-stars-price-for-two-div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
-.price-for-two-text{
-    font-size: 15px;
-    margin-left: 50px;
+.price-for-two-text {
+  font-size: 15px;
+  margin-left: 50px;
 }
-.restaurant-name-heading{
-    font-weight: bold;
+.restaurant-name-heading {
+  font-weight: bold;
 }
