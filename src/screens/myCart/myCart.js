@@ -22,13 +22,13 @@ class MyCartCard extends Component {
                     // }
 
 
-                    removeItemFromCart = (itemName) => {
-                        this.props.addRemoveItemHandler.removeItemFromCart(itemName);
+                    removeItemFromCart = (itemId) => {
+                        this.props.addRemoveItemHandler.removeItemFromCart(itemId);
 
                     }
 
-                    addItemToCart = (itemName) => {
-                        this.props.addRemoveItemHandler.addItemToCart(itemName);
+                    addItemToCart = (itemId) => {
+                        this.props.addRemoveItemHandler.addItemToCart(itemId);
                     }
 
     render() {
@@ -44,7 +44,7 @@ class MyCartCard extends Component {
                 <div className="myCart-body">
                     {this.props.itemQuantityArray.map(element => (
                         <div>
-                        {element.itemQuantityObject.itemQuantity>0 && <MyCartItems itemName={element.itemQuantityObject.itemName} itemQuantity={element.itemQuantityObject.itemQuantity} itemTotalPrice={element.itemQuantityObject.itemTotalPrice} isVeg={element.itemQuantityObject.isVeg} addRemoveItemHandler={this}/>
+                        {element.itemQuantityObject.itemQuantity>0 && <MyCartItems itemId={element.itemQuantityObject.itemId} itemName={element.itemQuantityObject.itemName} itemQuantity={element.itemQuantityObject.itemQuantity} itemPrice={element.itemQuantityObject.itemPrice} isVeg={element.itemQuantityObject.isVeg} addRemoveItemHandler={this}/>
     }</div>
                             ))
                     }
@@ -55,7 +55,7 @@ class MyCartCard extends Component {
                         <div className="space-between-total-price">
 
                         </div>
-                        <p>{"₹ " + 250}</p>
+                        <p>{"₹ " + this.props.totalBill}</p>
                     </div>
                     <Button variant="contained" color="primary">
                         Checkout

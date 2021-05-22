@@ -18,7 +18,7 @@ render() {
 }
 
 addItemToCartHandler = () => {
-    this.props.addItemHandler.addItemToCart(this.props.itemName);
+    this.props.addItemHandler.addItemToCart(this.props.itemId);
 }
 }
 

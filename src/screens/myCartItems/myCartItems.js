@@ -10,11 +10,11 @@ class MyCartItems extends Component {
 //addRemoveItemHandler
 
 removeItemHandler = () => {
-    this.props.addRemoveItemHandler.removeItemFromCart(this.props.itemName);
+    this.props.addRemoveItemHandler.removeItemFromCart(this.props.itemId);
 }
 
 addItemHandler = () => {
-    this.props.addRemoveItemHandler.addItemToCart(this.props.itemName);
+    this.props.addRemoveItemHandler.addItemToCart(this.props.itemId);
 }
 
 
@@ -48,7 +48,7 @@ addItemHandler = () => {
                     
                 </Grid>
                 <Grid item xs={2}>
-                    <p>{"₹ " + this.props.itemTotalPrice}</p>
+                    <p>{"₹ " + (this.props.itemPrice * this.props.itemQuantity)}</p>
                 </Grid>
             </Grid>
         </div>

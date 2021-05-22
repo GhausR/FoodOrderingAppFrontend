@@ -15,17 +15,20 @@ class Details extends Component {
         this.state = {
             isValidRestaurant: false,
             categoryList: '',
+            totalCartBill:0,
             myCartItemsQuantity: [
               {
                 "itemName":'',
+                "itemId":'',
                 "itemQuantity":0,
-                "itemTotalPrice":0,
+                "itemPrice":0,
                 "isVeg":true
               },
               {
                 "itemName":'',
+                "itemId":'',
                 "itemQuantity":0,
-                "itemTotalPrice":0,
+                "itemPrice":0,
                 "isVeg":true
               }
             ],
@@ -130,8 +133,9 @@ class Details extends Component {
                     category.item_list.forEach(item => {
                       var itemQuantityObject = {
                         "itemName":item.item_name,
+                        "itemId": item.id,
                         "itemQuantity":0,
-                        "itemTotalPrice":0,
+                        "itemPrice": item.price,
                         "isVeg": item.item_type === "VEG"?true:false
                       };
                       itemArray.push({itemQuantityObject});
@@ -160,15 +164,16 @@ class Details extends Component {
         xhr.send(data);
     }
 
-    addItemToCart = (itemName) => {
-      console.log(itemName);
+    addItemToCart = (itemId) => {
+      console.log(itemId);
       var myCartItemsQuantityArray = this.state.myCartItemsQuantity;
       var index = 0;
       var indexAt = -1;
       var currentQuantity = 0;
       var isVeg = true;
+      var currentTotalPrice = this.state.totalCartBill;
       myCartItemsQuantityArray.forEach(element => {
-        if(element.itemQuantityObject.itemName === itemName) {
+        if(element.itemQuantityObject.itemId === itemId) {
           indexAt = index;
           currentQuantity = element.itemQuantityObject.itemQuantity;
           isVeg = element.itemQuantityObject.isVeg;
@@ -181,23 +186,25 @@ class Details extends Component {
         }
       });
 
-      console.log(myCartItemsQuantityArray[indexAt].itemName);
+      console.log(myCartItemsQuantityArray[indexAt].itemQuantityObject.itemId);
 
       myCartItemsQuantityArray[indexAt].itemQuantityObject.itemQuantity = currentQuantity + 1;
+      currentTotalPrice = currentTotalPrice + myCartItemsQuantityArray[indexAt].itemQuantityObject.itemPrice;
 
-      this.setState({myCartItemsQuantity: myCartItemsQuantityArray});
+      this.setState({myCartItemsQuantity: myCartItemsQuantityArray, totalCartBill: currentTotalPrice});
 
     }
 
-    removeItemFromCart = (itemName) => {
-      console.log(itemName);
+    removeItemFromCart = (itemId) => {
+      console.log(itemId);
       var myCartItemsQuantityArray = this.state.myCartItemsQuantity;
       var index = 0;
       var indexAt = -1;
       var currentQuantity = 0;
       var isVeg = true;
+      var currentTotalPrice = this.state.totalCartBill;
       myCartItemsQuantityArray.forEach(element => {
-        if(element.itemQuantityObject.itemName === itemName) {
+        if(element.itemQuantityObject.itemId === itemId) {
           indexAt = index;
           currentQuantity = element.itemQuantityObject.itemQuantity;
           isVeg = element.itemQuantityObject.isVeg;
@@ -210,11 +217,13 @@ class Details extends Component {
         }
       });
 
-      console.log(myCartItemsQuantityArray[indexAt].itemName);
+      console.log(myCartItemsQuantityArray[indexAt].itemQuantityObject.itemId);
 
       myCartItemsQuantityArray[indexAt].itemQuantityObject.itemQuantity = currentQuantity - 1;
 
-      this.setState({myCartItemsQuantity: myCartItemsQuantityArray});
+      currentTotalPrice = currentTotalPrice - myCartItemsQuantityArray[indexAt].itemQuantityObject.itemPrice;
+
+      this.setState({myCartItemsQuantity: myCartItemsQuantityArray, totalCartBill: currentTotalPrice});
 
     }
 
@@ -237,14 +246,14 @@ class Details extends Component {
                         <div className="category-container">
                             <Categories categoryName={category.category_name}/>
                             {category.item_list.map(item => (
-                                <Items addItemHandler={this} itemName={item.item_name} itemPrice={item.price} isVeg={item.item_type === "VEG"?true:false}/>
+                                <Items addItemHandler={this} itemId={item.id} itemName={item.item_name} itemPrice={item.price} isVeg={item.item_type === "VEG"?true:false}/>
                             ))}
                         </div>
         ))};
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                       <div className="myCart-container">
-                      {this.state.isValidRestaurant && <MyCartCard itemQuantityArray={this.state.myCartItemsQuantity} addRemoveItemHandler={this}/>}
+                      {this.state.isValidRestaurant && <MyCartCard totalBill={this.state.totalCartBill} itemQuantityArray={this.state.myCartItemsQuantity} addRemoveItemHandler={this}/>}
                       </div>
                     </Grid>
                 </Grid>
