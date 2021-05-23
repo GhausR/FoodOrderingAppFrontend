@@ -35,28 +35,39 @@ class Header extends Component {
   }
 
   loginHandler = () => {
-    this.props.modalHandler.openModalHandler();
+    if(this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
+      this.props.modalHandler.openModalHandler();
+    }
+    
   };
 
   picClickHandler = () => {
+    if(this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
     if (this.state["options-open"]) {
       this.setState({ "options-open": false });
     } else {
       this.setState({ "options-open": true });
     }
+  }
   };
 
   filterRestaurantHandler = (e) => {
+    if(this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
     this.props.modalHandler.filterRestaurant(e.target.value);
+    }
   };
 
   logoutClickHandler = () => {
+    if(this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
     this.props.modalHandler.logout();
     this.setState({ "options-open": false });
+    }
   };
 
   profilePageNavigationHandler = () => {
+    if(this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
     this.props.modalHandler.goToProfile();
+    }
   };
   /*console.log(sessionStorage.getItem('access-token'));
     sessionStorage.removeItem('uuid');

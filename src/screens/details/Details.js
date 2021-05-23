@@ -515,7 +515,8 @@ class Details extends Component {
           this.setState({loggedIn : false});
         }
         else {
-          this.setState({loggedIn : true});
+          var firstName = sessionStorage.getItem("firstname");
+          this.setState({loggedIn : true, loggedInUserFirstName: firstName});
         }
         console.log("component will mount called");
         console.log(this.props.match.params.restaurant_id);

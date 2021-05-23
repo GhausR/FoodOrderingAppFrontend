@@ -141,6 +141,16 @@ class Home extends Component {
   //API call before mounting the component on screen
 
   componentWillMount() {
+
+    var accessToken = sessionStorage.getItem("access-token");
+        if(accessToken === undefined || accessToken === null) {
+          this.setState({loggedIn : false});
+        }
+        else {
+          var firstName = sessionStorage.getItem("firstname");
+          this.setState({loggedIn : true, loggedInUserFirstName: firstName});
+        }
+
     console.log("component will mount called");
     let data = null;
     let xhr = new XMLHttpRequest();
