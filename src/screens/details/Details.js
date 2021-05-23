@@ -660,7 +660,7 @@ class Details extends Component {
       }.bind(this), 3000);
         }
         else {
-          this.props.history.push("/checkout");
+          this.props.history.push("/checkout", {itemQuantities: this.state.myCartItemsQuantity, restaurantName: this.state.restaurantDetails.restaurant_name});
         }
       }
     }

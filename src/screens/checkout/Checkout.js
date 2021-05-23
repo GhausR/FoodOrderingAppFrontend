@@ -24,6 +24,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import '../checkout/Checkout.css';
 import Grid from "@material-ui/core/Grid";
+import MyCartCard from '../myCart/myCart';
 
 
 function TabContainer(props) {
@@ -56,6 +57,10 @@ class Checkout extends Component {
             stateformHelperTextClassname: 'DispNone',
             pincodeformHelperTextClassname: 'DispNone',
             pincodeValidityformHelperTextClassname: 'DispNone',
+            itemQuantities:[],
+            totalBill: 0,
+            restaurantName: '',
+            isFinished: false,
             allStatesList: [
                 {
                     "id": "123",
@@ -115,6 +120,21 @@ class Checkout extends Component {
             this.getAllAddresses();
             this.getAllStates();
             this.getAllPayments();
+            var totalBill = 0;
+            if(this.props.location.state === undefined || this.props.location.state === null) {
+              this.props.history.push("/");
+            }
+            else {
+              this.props.location.state.itemQuantities.forEach(element => {
+                if(element.itemQuantityObject.itemQuantity!==0) {
+                totalBill = totalBill + (element.itemQuantityObject.itemQuantity * element.itemQuantityObject.itemPrice);
+                }
+              });
+              //restaurantName
+  
+              this.setState({itemQuantities: this.props.location.state.itemQuantities, totalBill: totalBill, restaurantName: this.props.location.state.restaurantName});
+            }
+            
         }
     }
 
@@ -232,16 +252,23 @@ class Checkout extends Component {
           this.setState({selectedAddressId : id});
       }
       nextActiveStep = () => {
-        this.setState({activeStep : 1});
+        if(this.state.selectedAddressId !== '') {
+
+        
+        this.setState({activeStep : 1});}
       }
       finishCheckoutHandler = () => {
-
+        if(this.state.selectedPaymentMethod !== '') {
+        this.setState({isFinished: true, activeStep: 2});}
       }
       goBackToAddressStepHandler = () => {
-        this.setState({activeStep : 0});
+        this.setState({isFinished: false, activeStep : 0});
       }
       handlePaymentOptionChange = (event) => {
           this.setState({selectedPaymentMethod : event.target.value});
+      }
+      changeCheckoutDetailsHandler = () => {
+        this.setState({isFinished: false, activeStep : 0});
       }
     render() {
         return <div>
@@ -253,7 +280,7 @@ class Checkout extends Component {
                 />
             </div>
             <Grid container>
-                <Grid item xs={9}>
+                <Grid item xs={12} md={8}>
 
                 <div>
                 <Stepper activeStep={this.state.activeStep} orientation="vertical">
@@ -277,7 +304,7 @@ class Checkout extends Component {
                                                     {
                                                     this.state.allAddressesList.map(
                                                         address => (
-                                                            <Grid item xs={6} sm={6} md={3}>
+                                                            <Grid item xs={6} sm={6} md={4}>
                                                                 <div onClick={this.selectAddressHandler.bind(this,address.id)} className={this.state.selectedAddressId === address.id?'selectedAddressDiv':'unselectedAddressDiv'}>
                                                             <AddressCard City={address.city} Flat={address.flat_building_name} Locality={address.locality} State={address.state.state_name} Pincode={address.pincode} isSelected={this.state.selectedAddressId === address.id}/>
                                                             </div></Grid>
@@ -308,8 +335,8 @@ class Checkout extends Component {
 
 { this.state.allAddressesList===null &&
                                                 <div>
-                                                    <p>
-                                                        No addresses saved/found
+                                                    <p style={{color: 'grey'}}>
+                                                    There are no saved addresses! You can save an address using the 'New Address' tab or using your ‘Profile’ menu option.
                                                     </p>
                                                     </div>
                                                 
@@ -501,12 +528,24 @@ class Checkout extends Component {
                         </StepContent>
                     </Step>
                 </Stepper>
+                {
+                  this.state.isFinished && 
+                  <div style={{marginLeft: 20}}>
+                    <h3>View the summary and place your order now!</h3>
+                    <Button
+                    style={{width: 40, fontSize: 12}}
+                    onClick={this.changeCheckoutDetailsHandler}
+                  >
+                    CHANGE
+                  </Button>
+                    </div>
+                }
             </div>
 
 
                 </Grid>
-                <Grid item xs={3}>
-
+                <Grid item xs={12} md={4}>
+                <MyCartCard badgeCount={0} totalBill={this.state.totalBill} itemQuantityArray={this.state.itemQuantities} addRemoveItemHandler={null} restaurantName={this.state.restaurantName}/>
                 </Grid>
             </Grid>
             

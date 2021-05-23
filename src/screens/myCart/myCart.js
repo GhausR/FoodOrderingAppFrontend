@@ -32,30 +32,53 @@ class MyCartCard extends Component {
                     }
 
                     checkoutClickHandler = () => {
-                        this.props.addRemoveItemHandler.checkout();
+                        if(this.props.addRemoveItemHandler !== null) {
+                            this.props.addRemoveItemHandler.checkout();
+                        }
+                        
+                    }
+                    constructor() {
+                        super();
+                        this.state = {
+                            mainDivClass: 'myCartCard-div'
+                        }
+                    }
+                    componentWillMount() {
+                        if(this.props.addRemoveItemHandler === null) {
+                            this.setState({mainDivClass: 'myCartCard2-div'})
+                        }
                     }
 
     render() {
-        return <div className="myCartCard-div">
+        return <div className={this.state.mainDivClass}>
             <Card>
                 <div className="myCart-header">
-
-                    <Badge badgeContent={this.props.badgeCount} color="primary">
+{ this.props.addRemoveItemHandler !== null &&
+<div>
+    
+    <Badge badgeContent={this.props.badgeCount} color="primary">
                         <ShoppingCartIcon />
                     </Badge>
-                    <p>My Cart</p>
+                    <p>My Cart</p></div>
+}
+{ this.props.addRemoveItemHandler === null &&
+<div>
+                    <p className="SummaryHeading">Summary</p>
+                    <p className="RestaurantNameHeading">{this.props.restaurantName}</p>
+                    </div>
+}
                 </div>
                 <div className="myCart-body">
                     {this.props.itemQuantityArray.map(element => (
                         <div>
-                        {element.itemQuantityObject.itemQuantity>0 && <MyCartItems itemId={element.itemQuantityObject.itemId} itemName={element.itemQuantityObject.itemName} itemQuantity={element.itemQuantityObject.itemQuantity} itemPrice={element.itemQuantityObject.itemPrice} isVeg={element.itemQuantityObject.isVeg} addRemoveItemHandler={this}/>
+                        {element.itemQuantityObject.itemQuantity>0 && <MyCartItems itemId={element.itemQuantityObject.itemId} itemName={element.itemQuantityObject.itemName} itemQuantity={element.itemQuantityObject.itemQuantity} itemPrice={element.itemQuantityObject.itemPrice} isVeg={element.itemQuantityObject.isVeg} addRemoveItemHandler={this.props.addRemoveItemHandler===null?null:this}/>
     }</div>
                             ))
                     }
-                </div>
+    </div>
                 <div className="myCart-footer">
                     <div className="myCart-totalPrice">
-                        <p>TOTAL AMOUNT</p>
+                        <p>{this.props.addRemoveItemHandler === null?'NET AMOUNT':'TOTAL AMOUNT'}</p>
                         <div className="space-between-total-price">
 
                         </div>
@@ -65,7 +88,7 @@ class MyCartCard extends Component {
                     variant="contained" 
                     color="primary"
                     onClick={this.checkoutClickHandler}>
-                        Checkout
+                        {this.props.addRemoveItemHandler === null?'PLACE ORDER':'Checkout'}
 </Button>
                 </div>
             </Card>

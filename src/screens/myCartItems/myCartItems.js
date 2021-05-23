@@ -32,17 +32,17 @@ addItemHandler = () => {
                 </Grid>
                 <Grid item xs={4}>
                     <div className="add-remove-items-div">
-                        <div className="remove-item-icon" onClick={this.removeItemHandler}>
+                        {this.props.addRemoveItemHandler!==null && <div className="remove-item-icon" onClick={this.removeItemHandler}>
                         <RemoveIcon/>
-                        </div>
+                        </div>}
                     
                     <div className="itemQuantity-div">
                     <p>{this.props.itemQuantity}</p>
                     </div>
                     
-                    <div className="add-item-icon" onClick={this.addItemHandler}>
+                    {this.props.addRemoveItemHandler!==null && <div className="add-item-icon" onClick={this.addItemHandler}>
                     <AddIcon/>
-                    </div>
+                    </div>}
                     
                     </div>
                     
