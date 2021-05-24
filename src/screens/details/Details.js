@@ -420,7 +420,7 @@ class Details extends Component {
     let xhrSignup = new XMLHttpRequest();
     xhrSignup.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
-        if (this.status == 201) {
+        if (this.status === 201) {
           console.log("signup call state : " + this.readyState);
           //registeredSuccessfullyMessageClass
           that.setState({
@@ -468,7 +468,7 @@ class Details extends Component {
     let xhrSignup = new XMLHttpRequest();
     xhrSignup.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
-        if (this.status == 200) {
+        if (this.status === 200) {
           // console.log(sessionStorage.getItem('access-token'));
           sessionStorage.removeItem("uuid");
           sessionStorage.removeItem("access-token");

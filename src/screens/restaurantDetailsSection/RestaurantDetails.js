@@ -3,8 +3,6 @@ import "./RestaurantDetails.css";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import "font-awesome/css/font-awesome.css";
-import StarIcon from "@material-ui/icons/Star";
-import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   banner: {

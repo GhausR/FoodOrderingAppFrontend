@@ -65,7 +65,7 @@ class MyCartCard extends Component {
                 </div>
                 <div className="myCart-body">
                     {this.props.itemQuantityArray.map(element => (
-                        <div>
+                        <div key={element.itemQuantityObject.itemId}>
                             {element.itemQuantityObject.itemQuantity > 0 && <MyCartItems itemId={element.itemQuantityObject.itemId} itemName={element.itemQuantityObject.itemName} itemQuantity={element.itemQuantityObject.itemQuantity} itemPrice={element.itemQuantityObject.itemPrice} isVeg={element.itemQuantityObject.isVeg} addRemoveItemHandler={this.props.addRemoveItemHandler === null ? null : this} />
                             }</div>
                     ))
@@ -75,10 +75,10 @@ class MyCartCard extends Component {
                     {
                         (this.props.addRemoveItemHandler === null && this.state.showPlaceOrderDetails) &&
                         <div>
-                            <div className="myCart-footer">
-                                <TextField defaultValue='FLAT 50' disabled />
+                            <div className="myCart-footer" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                <TextField label='Coupon Code' defaultValue='FLAT 50' disabled style={{backgroundColor: '#fcffa1', width: 150}}/>
                                 <Button
-                                    style={{ width: 40, fontSize: 12, marginLeft: 10 }}
+                                    style={{ width: 40, fontSize: 12, marginRight: 20, height: 30}}
                                     variant="contained" disabled
                                 >
                                     APPLY
