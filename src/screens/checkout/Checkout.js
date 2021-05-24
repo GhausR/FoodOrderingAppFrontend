@@ -18,8 +18,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import AddressCard from '../addressCard/AddressCard';
-// import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import '../checkout/Checkout.css';
@@ -603,7 +601,7 @@ class Checkout extends Component {
     let that = this;
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
-        if (this.status == 200) {
+        if (this.status === 200) {
           that.setState({
             allAddressesList: JSON.parse(this.responseText).addresses,
           });
@@ -666,7 +664,7 @@ class Checkout extends Component {
     let that = this;
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
-        if (this.status == 200) {
+        if (this.status === 200) {
           that.setState({
             allStatesList: JSON.parse(this.responseText).states,
           });
@@ -688,7 +686,7 @@ class Checkout extends Component {
     let that = this;
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
-        if (this.status == 200) {
+        if (this.status === 200) {
           that.setState({
             allPaymentsList: JSON.parse(this.responseText).paymentMethods,
           });
@@ -701,6 +699,7 @@ class Checkout extends Component {
     xhr.setRequestHeader("Accept", "application/json;charset=UTF-8");
     xhr.send(data);
   }
+
 
   //This function saves and places the order.
   saveOrderApiCall = () => {
@@ -736,7 +735,7 @@ class Checkout extends Component {
           // After 3 seconds, remove the show class from DIV
           setTimeout(function () {
             that.setState({ placeOrderSuccessMessageClass: "" });
-          }.bind(that), 3000);
+          }, 3000);
         }
 
         else {
@@ -745,7 +744,7 @@ class Checkout extends Component {
           // After 3 seconds, remove the show class from DIV
           setTimeout(function () {
             that.setState({ placeOrderFailedMessageClass: "" });
-          }.bind(that), 3000);
+          }, 3000);
         }
 
       }
