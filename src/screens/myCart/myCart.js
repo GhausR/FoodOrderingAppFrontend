@@ -121,7 +121,7 @@ class MyCartCard extends Component {
                         <div className="space-between-total-price">
 
                         </div>
-                        <p>{"₹ " + this.props.totalBill}</p>
+                        <p>{"₹ " + (this.props.addRemoveItemHandler === null?(this.state.showPlaceOrderDetails?(this.props.totalBill/2):(this.props.totalBill)):(this.props.totalBill))}</p>
                     </div>
                     <Button 
                     variant="contained" 
