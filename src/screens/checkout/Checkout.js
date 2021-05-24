@@ -27,9 +27,9 @@ import MyCartCard from '../myCart/myCart';
 // tab container for existing address and new address
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ padding: 0 }}>
-      {props.children}
-    </Typography>
+      <Typography component="div" style={{ padding: 0 }}>
+        {props.children}
+      </Typography>
   );
 }
 
@@ -302,22 +302,22 @@ class Checkout extends Component {
   render() {
     return <div>
       <div
-        className={this.state.placeOrderFailedMessageClass}
-        id="snackbar"
+          className={this.state.placeOrderFailedMessageClass}
+          id="snackbar"
       >
         Unable to place your order! Please try again!
-        </div>
+      </div>
       <div
-        className={this.state.placeOrderSuccessMessageClass}
-        id="snackbar"
+          className={this.state.placeOrderSuccessMessageClass}
+          id="snackbar"
       >
         Order placed successfully! Your order ID is {this.state.successOrderID}.
-        </div>
+      </div>
       <div>
         <Header isLogin={this.state.loggedIn}
-          modalHandler={null}
-          firstName={this.state.loggedInUserFirstName}
-          isOnHome={false}
+                modalHandler={null}
+                firstName={this.state.loggedInUserFirstName}
+                isOnHome={false}
         />
       </div>
       <Grid container>
@@ -340,46 +340,46 @@ class Checkout extends Component {
 
                       <div>
                         {this.state.allAddressesList !== null &&
-                          <div>
-                            <Grid container>
-                              {
-                                this.state.allAddressesList.map(
+                        <div>
+                          <Grid container>
+                            {
+                              this.state.allAddressesList.map(
                                   address => (
-                                    <Grid item xs={6} sm={6} md={4}>
-                                      <div onClick={this.selectAddressHandler.bind(this, address.id)} className={this.state.selectedAddressId === address.id ? 'selectedAddressDiv' : 'unselectedAddressDiv'}>
-                                        <AddressCard City={address.city} Flat={address.flat_building_name} Locality={address.locality} State={address.state.state_name} Pincode={address.pincode} isSelected={this.state.selectedAddressId === address.id} />
-                                      </div></Grid>
+                                      <Grid item xs={6} sm={6} md={4}>
+                                        <div onClick={this.selectAddressHandler.bind(this, address.id)} className={this.state.selectedAddressId === address.id ? 'selectedAddressDiv' : 'unselectedAddressDiv'}>
+                                          <AddressCard City={address.city} Flat={address.flat_building_name} Locality={address.locality} State={address.state.state_name} Pincode={address.pincode} isSelected={this.state.selectedAddressId === address.id} />
+                                        </div></Grid>
                                   )
-                                )
-                              }
-                            </Grid>
-                            <div>
-                              <Button
+                              )
+                            }
+                          </Grid>
+                          <div>
+                            <Button
                                 variant="contained"
                                 style={{ width: 40, fontSize: 12, marginRight: 10 }}
                                 disabled
-                              >
-                                BACK
-                  </Button>
-                              <Button
+                            >
+                              BACK
+                            </Button>
+                            <Button
                                 variant="contained"
                                 color="primary"
                                 style={{ width: 40, fontSize: 12 }}
                                 onClick={this.nextActiveStep}
-                              >
-                                NEXT
-                  </Button>
-                            </div>
+                            >
+                              NEXT
+                            </Button>
                           </div>
+                        </div>
 
                         }
 
                         {this.state.allAddressesList === null &&
-                          <div>
-                            <p style={{ color: 'grey' }}>
-                              There are no saved addresses! You can save an address using the 'New Address' tab or using your ‘Profile’ menu option.
-                                                    </p>
-                          </div>
+                        <div>
+                          <p style={{ color: 'grey' }}>
+                            There are no saved addresses! You can save an address using the 'New Address' tab or using your ‘Profile’ menu option.
+                          </p>
+                        </div>
 
                         }
 
@@ -396,34 +396,34 @@ class Checkout extends Component {
                           <FormControl required>
                             <InputLabel htmlFor="Flat">Flat/Building No.</InputLabel>
                             <Input
-                              id="Flat"
-                              type="text"
-                              onChange={this.flatChangeHandler}
+                                id="Flat"
+                                type="text"
+                                onChange={this.flatChangeHandler}
                             />
                             <FormHelperText
-                              className={
-                                this.state.FlatformHelperTextClassname
-                              }
-                              style={{ color: "#f05945" }}
+                                className={
+                                  this.state.FlatformHelperTextClassname
+                                }
+                                style={{ color: "#f05945" }}
                             >
                               required
-                    </FormHelperText>
+                            </FormHelperText>
                           </FormControl>
                         </div>
                         <div >
                           <FormControl required>
                             <InputLabel htmlFor="locality">Locality</InputLabel>
                             <Input
-                              id="locality"
-                              type="text"
-                              onChange={this.localityChangeHandler}
+                                id="locality"
+                                type="text"
+                                onChange={this.localityChangeHandler}
                             />
                             <FormHelperText
-                              className={this.state.localityformHelperTextClassname}
-                              style={{ color: "#f05945" }}
+                                className={this.state.localityformHelperTextClassname}
+                                style={{ color: "#f05945" }}
                             >
                               required
-                    </FormHelperText>
+                            </FormHelperText>
                           </FormControl>
                         </div>
 
@@ -431,16 +431,16 @@ class Checkout extends Component {
                           <FormControl required>
                             <InputLabel htmlFor="city">City</InputLabel>
                             <Input
-                              id="city"
-                              type="text"
-                              onChange={this.cityChangeHandler}
+                                id="city"
+                                type="text"
+                                onChange={this.cityChangeHandler}
                             />
                             <FormHelperText
-                              className={this.state.cityformHelperTextClassname}
-                              style={{ color: "#f05945" }}
+                                className={this.state.cityformHelperTextClassname}
+                                style={{ color: "#f05945" }}
                             >
                               required
-                    </FormHelperText>
+                            </FormHelperText>
                           </FormControl>
                         </div>
 
@@ -456,30 +456,30 @@ class Checkout extends Component {
                             <FormControl required>
                               <InputLabel id="state-menu">State</InputLabel>
                               <Select
-                                labelId="state-menu"
-                                id="state-menu"
-                                value={this.state.selectedState}
-                                onChange={this.handleStateMenuChange}
-                                style={{ width: 130 }}
+                                  labelId="state-menu"
+                                  id="state-menu"
+                                  value={this.state.selectedState}
+                                  onChange={this.handleStateMenuChange}
+                                  style={{ width: 130 }}
                               >
                                 <MenuItem value="">
                                   <em>None</em>
                                 </MenuItem>
                                 {
                                   this.state.allStatesList.map(
-                                    state => (
-                                      <MenuItem value={state.id}>{state.state_name}</MenuItem>
-                                    )
+                                      state => (
+                                          <MenuItem value={state.id}>{state.state_name}</MenuItem>
+                                      )
                                   )}
 
 
                               </Select>
                               <FormHelperText
-                                className={this.state.stateformHelperTextClassname}
-                                style={{ color: "#f05945" }}
+                                  className={this.state.stateformHelperTextClassname}
+                                  style={{ color: "#f05945" }}
                               >
                                 required
-                    </FormHelperText>
+                              </FormHelperText>
                             </FormControl>
                           </div>
                           }
@@ -492,22 +492,22 @@ class Checkout extends Component {
                           <FormControl required>
                             <InputLabel htmlFor="pincode">Pincode</InputLabel>
                             <Input
-                              id="pincode"
-                              type="text"
-                              onChange={this.pincodeChangeHandler}
+                                id="pincode"
+                                type="text"
+                                onChange={this.pincodeChangeHandler}
                             />
                             <FormHelperText
-                              className={this.state.pincodeformHelperTextClassname}
-                              style={{ color: "#f05945" }}
+                                className={this.state.pincodeformHelperTextClassname}
+                                style={{ color: "#f05945" }}
                             >
                               required
-                    </FormHelperText>
+                            </FormHelperText>
                             <FormHelperText
-                              className={this.state.pincodeValidityformHelperTextClassname}
-                              style={{ color: "#f05945" }}
+                                className={this.state.pincodeValidityformHelperTextClassname}
+                                style={{ color: "#f05945" }}
                             >
                               Pincode must contain only numbers and must be 6 digits long
-                    </FormHelperText>
+                            </FormHelperText>
                           </FormControl>
                         </div>
 
@@ -515,13 +515,13 @@ class Checkout extends Component {
 
                         <div>
                           <Button
-                            variant="contained"
-                            color="secondary"
-                            style={{ width: 130, fontSize: 10 }}
-                            onClick={this.saveAddressHandler}
+                              variant="contained"
+                              color="secondary"
+                              style={{ width: 130, fontSize: 10 }}
+                              onClick={this.saveAddressHandler}
                           >
                             SAVE ADDRESS
-                  </Button>
+                          </Button>
                         </div>
                       </div>
                     }
@@ -541,9 +541,9 @@ class Checkout extends Component {
                           {
 
                             this.state.allPaymentsList.map(
-                              payment => (
-                                <FormControlLabel value={payment.id} control={<Radio />} label={payment.payment_name} />
-                              )
+                                payment => (
+                                    <FormControlLabel value={payment.id} control={<Radio />} label={payment.payment_name} />
+                                )
                             )
 
                           }
@@ -553,16 +553,16 @@ class Checkout extends Component {
 
                   </div>
                   <Button
-                    style={{ width: 40, fontSize: 12, marginRight: 10 }}
-                    onClick={this.goBackToAddressStepHandler}
+                      style={{ width: 40, fontSize: 12, marginRight: 10 }}
+                      onClick={this.goBackToAddressStepHandler}
                   >
                     BACK
                   </Button>
                   <Button
-                    variant="contained"
-                    color="primary"
-                    style={{ width: 40, fontSize: 12 }}
-                    onClick={this.finishCheckoutHandler}
+                      variant="contained"
+                      color="primary"
+                      style={{ width: 40, fontSize: 12 }}
+                      onClick={this.finishCheckoutHandler}
                   >
                     FINISH
                   </Button>
@@ -574,11 +574,11 @@ class Checkout extends Component {
               <div style={{ marginLeft: 20 }}>
                 <h3>View the summary and place your order now!</h3>
                 <Button
-                  style={{ width: 40, fontSize: 12 }}
-                  onClick={this.changeCheckoutDetailsHandler}
+                    style={{ width: 40, fontSize: 12 }}
+                    onClick={this.changeCheckoutDetailsHandler}
                 >
                   CHANGE
-                  </Button>
+                </Button>
               </div>
             }
           </div>
@@ -593,7 +593,7 @@ class Checkout extends Component {
     </div>
   }
 
-
+//This fucntion gets all the saved addresses from the backend server.
   getAllAddresses = () => {
     var accessToken = sessionStorage.getItem("access-token");
     let data = null;
@@ -613,15 +613,11 @@ class Checkout extends Component {
     xhr.open("GET", "http://localhost:8080/api/address/customer");
     xhr.setRequestHeader("authorization", "Bearer " + accessToken);
     xhr.setRequestHeader("Accept", "application/json;charset=UTF-8");
-    /*
-        {
-  "Accept": "application/json;charset=UTF-8"
-}
-        */
+
     xhr.send(data);
   }
 
-
+//This function saves the address to the backend server.
   saveAddressApiCall = () => {
     var accessToken = sessionStorage.getItem("access-token");
     let that = this;
@@ -630,11 +626,7 @@ class Checkout extends Component {
     var locality = this.state.selectedLocality;
     var pincode = this.state.selectedPincode;
     var state = this.state.selectedState;
-    // console.log(city);
-    // console.log(flat);
-    // console.log(locality);
-    // console.log(pincode);
-    // console.log(state);
+
     let dataAddress = JSON.stringify({
       city: city,
       flat_building_name: flat,
@@ -644,17 +636,6 @@ class Checkout extends Component {
     });
 
     console.log();
-
-
-    //       let that = this;
-    // let dataSignUp = JSON.stringify({
-    //   contact_number: this.state.contact,
-    //   email_address: this.state.email,
-    //   first_name: this.state.firstName,
-    //   last_name: this.state.lastName,
-    //   password: this.state.psw,
-    // });
-
 
     let xhrAddress = new XMLHttpRequest();
     xhrAddress.addEventListener("readystatechange", function () {
@@ -676,7 +657,7 @@ class Checkout extends Component {
   };
 
 
-  // get All States API call
+  // This function gets the list of all the states from the backend.
   getAllStates = () => {
     let data = null;
     let xhr = new XMLHttpRequest();
@@ -694,16 +675,11 @@ class Checkout extends Component {
 
     xhr.open("GET", "http://localhost:8080/api/states");
     xhr.setRequestHeader("Accept", "application/json;charset=UTF-8");
-    /*
-        {
-  "Accept": "application/json;charset=UTF-8"
-}
-        */
     xhr.send(data);
   }
 
 
-  //get All Payments API call
+  //Thsi function gets all the payment methods from the backend.
   getAllPayments = () => {
     let data = null;
     let xhr = new XMLHttpRequest();
@@ -724,7 +700,8 @@ class Checkout extends Component {
     xhr.send(data);
   }
 
-  //This function saves the order. 
+
+  //This function saves and places the order.
   saveOrderApiCall = () => {
     var accessToken = sessionStorage.getItem("access-token");
     let that = this;
