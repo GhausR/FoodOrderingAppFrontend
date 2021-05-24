@@ -40,6 +40,9 @@ class Checkout extends Component {
     constructor() {
         super();
         this.state = {
+          successOrderID: '',
+          placeOrderSuccessMessageClass: '',
+          placeOrderFailedMessageClass: '',
             loggedIn: false,
             loggedInUserFirstName: '',
             tabSelected: 0,
@@ -132,7 +135,7 @@ class Checkout extends Component {
               });
               //restaurantName
   
-              this.setState({itemQuantities: this.props.location.state.itemQuantities, totalBill: totalBill, restaurantName: this.props.location.state.restaurantName});
+              this.setState({itemQuantities: this.props.location.state.itemQuantities, totalBill: totalBill, restaurantName: this.props.location.state.restaurantName, restaurantId: this.props.location.state.restaurantId});
             }
             
         }
@@ -271,7 +274,19 @@ class Checkout extends Component {
         this.setState({isFinished: false, activeStep : 0});
       }
     render() {
-        return <div>
+      return <div>
+          <div
+          className={this.state.placeOrderFailedMessageClass}
+          id="snackbar"
+        >
+          Unable to place your order! Please try again!
+        </div>
+        <div
+          className={this.state.placeOrderSuccessMessageClass}
+          id="snackbar"
+        >
+          Order placed successfully! Your order ID is {this.state.successOrderID}.
+        </div>
             <div>
                 <Header isLogin={this.state.loggedIn}
                     modalHandler={null}
@@ -545,7 +560,7 @@ class Checkout extends Component {
 
                 </Grid>
                 <Grid item xs={12} md={4}>
-                <MyCartCard badgeCount={0} totalBill={this.state.totalBill} itemQuantityArray={this.state.itemQuantities} addRemoveItemHandler={null} restaurantName={this.state.restaurantName}/>
+                <MyCartCard badgeCount={0} totalBill={this.state.totalBill} itemQuantityArray={this.state.itemQuantities} addRemoveItemHandler={null} restaurantName={this.state.restaurantName} placeOrderHandler={this} isFinished={this.state.isFinished}/>
                 </Grid>
             </Grid>
             
@@ -684,6 +699,64 @@ class Checkout extends Component {
             */
         xhr.send(data);
     }
+
+    saveOrderApiCall = () => {
+      var accessToken = sessionStorage.getItem("access-token");
+      let that = this;
+      var item_quantities = [];
+      this.state.itemQuantities.forEach(element => {
+        if(element.itemQuantityObject.itemQuantity > 0) {
+          item_quantities.push({
+            item_id: element.itemQuantityObject.itemId,
+            price: element.itemQuantityObject.itemPrice,
+            quantity: element.itemQuantityObject.itemQuantity,
+          });
+        }
+      });
+      let dataAddress = JSON.stringify({
+          address_id: this.state.selectedAddressId,
+          bill: this.state.totalBill,
+          coupon_id: '2ddf65fe-ecd0-11e8-8eb2-f2801f1b9fd1',
+          discount: this.state.totalBill/2,
+          item_quantities: item_quantities,
+          payment_id: this.state.selectedPaymentMethod,
+          restaurant_id: this.state.restaurantId
+        });
+
+  
+      let xhrAddress = new XMLHttpRequest();
+      xhrAddress.addEventListener("readystatechange", function() {
+        if (this.readyState === 4) {
+            if (this.status === 201) {
+               var orderPlacedId = JSON.parse(this.responseText).id;
+              that.setState({placeOrderSuccessMessageClass: 'show', successOrderID: orderPlacedId});
+        // After 3 seconds, remove the show class from DIV
+      setTimeout(function() {
+        that.setState({ placeOrderSuccessMessageClass: "" });
+      }.bind(that), 3000);
+            }
+        
+        else {
+
+          that.setState({placeOrderFailedMessageClass: 'show'});
+        // After 3 seconds, remove the show class from DIV
+      setTimeout(function() {
+        that.setState({ placeOrderFailedMessageClass: "" });
+      }.bind(that), 3000);
+            }
+
+          }
+          
+      });
+  
+      xhrAddress.open("POST", "http://localhost:8080/api/order");
+      xhrAddress.setRequestHeader("authorization", "Bearer " + accessToken);;
+      xhrAddress.setRequestHeader("Accept", "application/json;charset=UTF-8");
+      xhrAddress.setRequestHeader("Content-Type", "application/json");
+      xhrAddress.setRequestHeader("Cache-Control", "no-cache");
+      xhrAddress.send(dataAddress);
+    };
+
 
 }
 

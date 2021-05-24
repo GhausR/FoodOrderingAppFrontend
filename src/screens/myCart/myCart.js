@@ -5,6 +5,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Badge from '@material-ui/core/Badge';
 import MyCartItems from '../myCartItems/myCartItems';
 import Button from '@material-ui/core/Button';
+import TextField from "@material-ui/core/TextField";
 
 class MyCartCard extends Component {
     /*
@@ -35,12 +36,18 @@ class MyCartCard extends Component {
                         if(this.props.addRemoveItemHandler !== null) {
                             this.props.addRemoveItemHandler.checkout();
                         }
-                        
+                        if ((this.props.addRemoveItemHandler === null) && !(this.state.showPlaceOrderDetails) && (this.props.isFinished)) {
+                            this.setState({showPlaceOrderDetails : true});
+                        }
+                        if((this.props.addRemoveItemHandler === null) && (this.state.showPlaceOrderDetails)) {
+                            this.props.placeOrderHandler.saveOrderApiCall();
+                        }
                     }
                     constructor() {
                         super();
                         this.state = {
-                            mainDivClass: 'myCartCard-div'
+                            mainDivClass: 'myCartCard-div',
+                            showPlaceOrderDetails: false,
                         }
                     }
                     componentWillMount() {
@@ -75,6 +82,38 @@ class MyCartCard extends Component {
     }</div>
                             ))
                     }
+    </div>
+    <div>
+        {
+         (this.props.addRemoveItemHandler === null && this.state.showPlaceOrderDetails) &&
+         <div>
+             <div className="myCart-footer">
+             <TextField defaultValue='FLAT 50' disabled/>
+             <Button
+                    style={{width: 40, fontSize: 12, marginLeft: 10}}
+                    variant="contained" disabled
+                  >
+                    APPLY
+                  </Button>
+                  </div>
+                  <div className="myCart-footer">
+                  <div className="myCart-totalPrice">
+                        <p>SUBTOTAL</p>
+                        <div className="space-between-SUBTOTAL-price">
+                        </div>
+                        <p>{"₹ " + this.props.totalBill}</p>
+                    </div>
+                    <div className="myCart-totalPrice">
+                        <p>DISCOUNT</p>
+                        <div className="space-between-SUBTOTAL-price">
+                        </div>
+                        <p>{"₹ " + ((this.props.totalBill)/2)}</p>
+                    </div>
+                    
+                  <hr/>
+                    </div>
+             </div>   
+        }
     </div>
                 <div className="myCart-footer">
                     <div className="myCart-totalPrice">
