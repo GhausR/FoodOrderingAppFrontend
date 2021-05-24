@@ -43,3 +43,6 @@ Button {
     color: grey;
     margin-top: 30px;
 }
+.space-between-SUBTOTAL-price{
+    width: 160px;
+}

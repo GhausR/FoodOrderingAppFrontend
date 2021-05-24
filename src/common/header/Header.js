@@ -10,6 +10,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { withStyles } from "@material-ui/core/styles";
 import { green, red } from "@material-ui/core/colors";
 
+
+// to style search text field
 const styles = (theme) => ({
   root: {
     "& .MuiInput-underline:before": {
@@ -25,6 +27,8 @@ const styles = (theme) => ({
 });
 
 class Header extends Component {
+
+
   constructor() {
     super();
     // variable to check, if the options menu
@@ -34,39 +38,46 @@ class Header extends Component {
     };
   }
 
+
+  // login button click handling
   loginHandler = () => {
-    if(this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
+    if (this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
       this.props.modalHandler.openModalHandler();
     }
-    
+
   };
 
+  // profile pic click handling
   picClickHandler = () => {
-    if(this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
-    if (this.state["options-open"]) {
-      this.setState({ "options-open": false });
-    } else {
-      this.setState({ "options-open": true });
+    if (this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
+      if (this.state["options-open"]) {
+        this.setState({ "options-open": false });
+      } else {
+        this.setState({ "options-open": true });
+      }
     }
-  }
   };
 
+  // filter restaurants based on entered text by user
   filterRestaurantHandler = (e) => {
-    if(this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
-    this.props.modalHandler.filterRestaurant(e.target.value);
+    if (this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
+      this.props.modalHandler.filterRestaurant(e.target.value);
     }
   };
 
+
+  // logout button click handling
   logoutClickHandler = () => {
-    if(this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
-    this.props.modalHandler.logout();
-    this.setState({ "options-open": false });
+    if (this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
+      this.props.modalHandler.logout();
+      this.setState({ "options-open": false });
     }
   };
 
+  // navigate to profile page
   profilePageNavigationHandler = () => {
-    if(this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
-    this.props.modalHandler.goToProfile();
+    if (this.props.modalHandler !== undefined && this.props.modalHandler !== null) {
+      this.props.modalHandler.goToProfile();
     }
   };
   /*console.log(sessionStorage.getItem('access-token'));

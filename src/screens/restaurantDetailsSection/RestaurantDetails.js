@@ -6,7 +6,6 @@ import "font-awesome/css/font-awesome.css";
 import StarIcon from "@material-ui/icons/Star";
 import Grid from "@material-ui/core/Grid";
 
-// Abhijeet
 const useStyles = makeStyles((theme) => ({
   banner: {
     backgroundColor: "#eceff1",
@@ -48,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
 
 function RestaurantDetails(props) {
   const classes = useStyles();
