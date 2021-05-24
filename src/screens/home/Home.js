@@ -13,6 +13,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 
+
+// tab container for login/signup tabs
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 0 }}>
@@ -21,6 +23,7 @@ function TabContainer(props) {
   );
 }
 
+// home screen
 class Home extends Component {
   constructor() {
     super();
@@ -143,19 +146,21 @@ class Home extends Component {
   componentWillMount() {
 
     var accessToken = sessionStorage.getItem("access-token");
-        if(accessToken === undefined || accessToken === null) {
-          this.setState({loggedIn : false});
-        }
-        else {
-          var firstName = sessionStorage.getItem("firstname");
-          this.setState({loggedIn : true, loggedInUserFirstName: firstName});
-        }
+    if (accessToken === undefined || accessToken === null) {
+      this.setState({ loggedIn: false });
+    }
+    else {
+      var firstName = sessionStorage.getItem("firstname");
+      this.setState({ loggedIn: true, loggedInUserFirstName: firstName });
+    }
 
+
+    // get all restaurants
     console.log("component will mount called");
     let data = null;
     let xhr = new XMLHttpRequest();
     let that = this;
-    xhr.addEventListener("readystatechange", function() {
+    xhr.addEventListener("readystatechange", function () {
       console.log("state changed : " + this.readyState);
       if (this.readyState === 4) {
         that.setState({
@@ -190,17 +195,23 @@ class Home extends Component {
     this.setState({ restaurantListToDisplay: tempArray });
   }
 
+
+  // open Modal 
   openModalHandler = () => {
     this.setState({ isModalOpen: true, value: 0 });
   };
 
+  // close Modal
   closeModalHandler = () => {
     this.setState({ isModalOpen: false, value: 0 });
   };
+
+  // change modal tabs
   tabChangeHandler = (event, value) => {
     this.setState({ isModalOpen: true, value: value });
   };
 
+  // login Button Click Handler 
   loginBtnClickHandler = () => {
     var shouldLoginUser = true;
     if (this.state.loginContact === "") {
@@ -252,12 +263,14 @@ class Home extends Component {
     // }
   };
 
+
+  // login User
   loginUser = () => {
     let that = this;
     let dataLogin = null;
 
     let xhrLogin = new XMLHttpRequest();
-    xhrLogin.addEventListener("readystatechange", function() {
+    xhrLogin.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
         if (
           xhrLogin.getResponseHeader("access-token") === undefined ||
@@ -302,7 +315,7 @@ class Home extends Component {
             loggedInSuccessfullyMessageClass: "show",
           });
           // After 3 seconds, remove the show class from DIV
-          setTimeout(function() {
+          setTimeout(function () {
             that.setState({ loggedInSuccessfullyMessageClass: "" });
           }, 3000);
           that.closeModalHandler();
@@ -314,13 +327,15 @@ class Home extends Component {
     xhrLogin.setRequestHeader(
       "Authorization",
       "Basic " +
-        window.btoa(this.state.loginContact + ":" + this.state.loginPsw)
+      window.btoa(this.state.loginContact + ":" + this.state.loginPsw)
     );
     xhrLogin.setRequestHeader("Content-Type", "application/json");
     xhrLogin.setRequestHeader("Cache-Control", "no-cache");
     xhrLogin.send(dataLogin);
   };
 
+
+  // signup Button Click Handler
   signupBtnClickHandler = () => {
     var shouldSignUpUser = true;
     if (this.state.firstName === "") {
@@ -422,6 +437,7 @@ class Home extends Component {
     }
   };
 
+  // sign Up User
   signUpUser = () => {
     let that = this;
     let dataSignUp = JSON.stringify({
@@ -433,7 +449,7 @@ class Home extends Component {
     });
 
     let xhrSignup = new XMLHttpRequest();
-    xhrSignup.addEventListener("readystatechange", function() {
+    xhrSignup.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
         if (this.status == 201) {
           console.log("signup call state : " + this.readyState);
@@ -444,7 +460,7 @@ class Home extends Component {
             registeredSuccessfullyMessageClass: "show",
           });
           // After 3 seconds, remove the show class from DIV
-          setTimeout(function() {
+          setTimeout(function () {
             that.setState({ registeredSuccessfullyMessageClass: "" });
           }, 3000);
         } else {
@@ -465,19 +481,24 @@ class Home extends Component {
     xhrSignup.send(dataSignUp);
   };
 
+  //contact Input Field Change Handler
   contactInputFieldChangeHandler = (e) => {
     this.setState({ loginContact: e.target.value });
   };
+
+  //password Input Field Change Handler
   passwordInputFieldChangeHandler = (e) => {
     this.setState({ loginPsw: e.target.value });
   };
 
+
+  //logout
   logout = () => {
     let that = this;
     let dataSignUp = null;
 
     let xhrSignup = new XMLHttpRequest();
-    xhrSignup.addEventListener("readystatechange", function() {
+    xhrSignup.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
         if (this.status == 200) {
           // console.log(sessionStorage.getItem('access-token'));
@@ -502,11 +523,14 @@ class Home extends Component {
     xhrSignup.send(dataSignUp);
   };
 
+
+  //go To  Profile Page
   goToProfile = () => {
     console.log("home method called");
     this.props.history.push("/profile");
   };
 
+  // signup Inputs Field Change Handler
   signupInputFieldChangeHandler = (e) => {
     console.log(e.target.id);
     if (e.target.id === "lastName") {
@@ -527,6 +551,8 @@ class Home extends Component {
     console.log(e.target.value);
   };
 
+
+  // open Restaurant Details Page
   openRestaurantDetailsHandler = (restaurantId) => {
     this.props.history.push("/restaurant/" + restaurantId);
   };
@@ -577,6 +603,14 @@ class Home extends Component {
               </div>
             </Grid>
           ))}
+          <div>
+            {
+              this.state.restaurantListToDisplay.length === 0 &&
+              <p>
+                No restaurant with given name found!
+              </p>
+            }
+          </div>
         </Grid>
         <Modal
           id="login-register-modal"

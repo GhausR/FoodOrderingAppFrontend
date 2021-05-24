@@ -3,6 +3,8 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Grid from "@material-ui/core/Grid";
 import { green, grey } from '@material-ui/core/colors';
 
+
+// address card for checkout page
 function AddressCard(props) {
     return <div>
         <p>{props.Flat}</p>
@@ -15,11 +17,11 @@ function AddressCard(props) {
 
             </Grid>
             <Grid item xs={2}>
-            <CheckCircleIcon style={{ color: (props.isSelected?green[500]: grey[500])}}/>
+                <CheckCircleIcon style={{ color: (props.isSelected ? green[500] : grey[500]) }} />
             </Grid>
-        
+
         </Grid>
-        
+
     </div>
 }
 
