@@ -721,15 +721,10 @@ class Checkout extends Component {
 
     xhr.open("GET", "http://localhost:8080/api/payment");
     xhr.setRequestHeader("Accept", "application/json;charset=UTF-8");
-    /*
-        {
-  "Accept": "application/json;charset=UTF-8"
-}
-        */
     xhr.send(data);
   }
 
-  //save Order Api Call
+  //This function saves the order. 
   saveOrderApiCall = () => {
     var accessToken = sessionStorage.getItem("access-token");
     let that = this;
