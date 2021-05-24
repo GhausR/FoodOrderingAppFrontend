@@ -685,6 +685,65 @@ class Checkout extends Component {
         xhr.send(data);
     }
 
+    placeOrder = () => {
+      if (this.state.selectedAddressId === '' || this.state.selectedAddressId === undefined || this.state.paymentId === '' || this.state.paymentId === undefined || this.state.displayChange === 'display-none') {
+          this.setState({
+              placeOrderMessage: 'Unable to place your order! Please try again!',
+              placeOrderMessageOpen: true
+          })
+          return;
+      }
+      let bill = this.props.location.state.total;
+      let itemQuantities = [];
+      this.props.location.state.orderItems.items.map((item, index) => (
+          itemQuantities.push({item_id: item.id, price: item.quantity * item.pricePerItem, quantity: item.quantity})
+      ))
+      let order = {
+          address_id: this.state.selectedAddressId,
+          coupon_id: this.state.couponId,
+          item_quantities: itemQuantities,
+          payment_id: this.state.paymentId,
+          restaurant_id: this.props.location.state.orderItems.id,
+          bill: bill,
+          discount: 0
+      }
+
+      let token = sessionStorage.getItem('access-token');
+
+      let xhr = new XMLHttpRequest();
+
+      let that = this;
+
+      xhr.addEventListener("readystatechange", function () {
+              if (this.readyState === 4) {
+                  if (this.status === 201) {
+                      let orderId = JSON.parse(this.responseText).id;
+                      that.setState({
+                          placeOrderMessage: 'Order placed successfully! Your order ID is ' + orderId,
+                          placeOrderMessageOpen: true
+                      });
+                  } else {
+                      that.setState({
+                          placeOrderMessage: 'Unable to place your order! Please try again!',
+                          placeOrderMessageOpen: true
+                      });
+                      console.clear();
+                  }
+              }
+          }
+      );
+
+      let url = this.props.baseUrl + 'order';
+
+      xhr.open('POST', url);
+
+      xhr.setRequestHeader('authorization', 'Bearer ' + token);
+      xhr.setRequestHeader("Cache-Control", "no-cache");
+      xhr.setRequestHeader('content-type', 'application/json');
+
+      xhr.send(JSON.stringify(order));
+  }
+
 }
 
 export default Checkout;
